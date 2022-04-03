@@ -1,0 +1,34 @@
+name: opendht
+
+on:
+  workflow_dispatch:
+
+jobs:
+  macOS:
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # RISC-V PR changes   reverted
+        commit: ['risc-v-pr', '29bdc1a46fdbdedc277f49fe8651d9b68d067b38']
+
+    steps:
+      - name: clone opendht
+        run: |
+          git clone https://github.com/SpriteOvO/opendht.git
+          cd opendht
+          git checkout ${{ matrix.commit }}
+
+      - name: install dependencies
+        run: |
+          pip3 install Cython
+          brew install gnutls msgpack-cxx argon2 asio cppunit
+
+      - name: build
+        run: |
+          cd opendht          
+          mkdir build && cd build
+          cmake -DOPENDHT_C=On -DOPENDHT_TESTS=On -DCMAKE_BUILD_TYPE=Release -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=On ..
+          make
+          sudo make install

@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
   push:
 
+env:
+  IMAGE_BRANCH: ci-generated-metrics
+
 jobs:
   generate:
     runs-on: ubuntu-latest
@@ -16,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Checkout branch
-        run: git checkout --orphan ci-generated-metrics
+        run: git checkout --orphan $IMAGE_BRANCH
       - name: Generate metrics
         uses: lowlighter/metrics@latest
         with:
@@ -42,6 +45,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          sudo cp /metrics_renders/* ./
           git add --all
           git commit -m "Update metrics image"
-          git push --force --set-upstream origin ci-generated-metrics
+          git push --force --set-upstream origin $IMAGE_BRANCH

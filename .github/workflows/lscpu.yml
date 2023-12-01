@@ -1,0 +1,11 @@
+name: lscpu
+
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  lscpu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: lscpu
+        run: lscpu

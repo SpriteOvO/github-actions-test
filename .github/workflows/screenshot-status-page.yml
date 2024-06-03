@@ -13,7 +13,8 @@ jobs:
           source: ${{ secrets.HOME_LAB_STATUS_URL }}
           destination: screenshot.png
           dark-mode: true
-          width: 800
+          # width: 800
+          full-page: true
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact

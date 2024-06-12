@@ -54,6 +54,6 @@ jobs:
         summary-always: true
         comment-on-alert: true
         alert-comment-cc-users: '@SpriteOvO'
-    - name: Deploy results to GitHub Pages
+    - name: Push results to GitHub Pages branch
       if: github.event_name != 'pull_request' && (github.ref_name == 'main' || github.ref_name == 'main-dev')
       run: git push 'https://SpriteOvO:${{ secrets.GITHUB_TOKEN }}@github.com/SpriteOvO/github-actions-test.git' gh-pages:gh-pages

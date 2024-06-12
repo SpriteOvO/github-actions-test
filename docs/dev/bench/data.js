@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1718229634638,
+  "lastUpdate": 1718230454796,
   "repoUrl": "https://github.com/SpriteOvO/github-actions-test",
   "entries": {
     "spdlog-rs on Linux": [
@@ -209,6 +209,60 @@ window.BENCHMARK_DATA = {
             "name": "bench_4_rotating_daily",
             "value": 50099240.1,
             "range": "± 8390.21",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_5_level_off",
+            "value": 2.47,
+            "range": "± 0.02",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "SpriteOvO@gmail.com",
+            "name": "Asuna",
+            "username": "SpriteOvO"
+          },
+          "committer": {
+            "email": "SpriteOvO@gmail.com",
+            "name": "Asuna",
+            "username": "SpriteOvO"
+          },
+          "distinct": true,
+          "id": "6a6ceb558790cb6205a026aa9502e662f0e37f12",
+          "message": "Update ci.yml",
+          "timestamp": "2024-06-13T06:13:46+08:00",
+          "tree_id": "fc0c887d98df477536405bf6de1cd681390842c0",
+          "url": "https://github.com/SpriteOvO/github-actions-test/commit/6a6ceb558790cb6205a026aa9502e662f0e37f12"
+        },
+        "date": 1718230454466,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "bench_1_file",
+            "value": 215.15,
+            "range": "± 8.07",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_2_file_async",
+            "value": 194.77,
+            "range": "± 1.77",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_3_rotating_file_size",
+            "value": 219.75,
+            "range": "± 6.09",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_4_rotating_daily",
+            "value": 215.99,
+            "range": "± 8.83",
             "unit": "ns/iter"
           },
           {

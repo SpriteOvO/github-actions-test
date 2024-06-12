@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1718228910079,
+  "lastUpdate": 1718229634638,
   "repoUrl": "https://github.com/SpriteOvO/github-actions-test",
   "entries": {
     "spdlog-rs on Linux": [
@@ -155,6 +155,60 @@ window.BENCHMARK_DATA = {
             "name": "bench_4_rotating_daily",
             "value": 219.25,
             "range": "± 12.96",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_5_level_off",
+            "value": 2.47,
+            "range": "± 0.02",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "SpriteOvO@gmail.com",
+            "name": "Asuna",
+            "username": "SpriteOvO"
+          },
+          "committer": {
+            "email": "SpriteOvO@gmail.com",
+            "name": "Asuna",
+            "username": "SpriteOvO"
+          },
+          "distinct": true,
+          "id": "57bf64639eb73952f6a8ffa8e500d7d16c7958c9",
+          "message": "1",
+          "timestamp": "2024-06-13T05:59:08+08:00",
+          "tree_id": "1ade0e14ebe1447099dd573230f0631ac7408de7",
+          "url": "https://github.com/SpriteOvO/github-actions-test/commit/57bf64639eb73952f6a8ffa8e500d7d16c7958c9"
+        },
+        "date": 1718229634303,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "bench_1_file",
+            "value": 50098658.8,
+            "range": "± 10306.86",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_2_file_async",
+            "value": 50103846.6,
+            "range": "± 35252.26",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_3_rotating_file_size",
+            "value": 50098659.9,
+            "range": "± 8656.99",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_4_rotating_daily",
+            "value": 50099240.1,
+            "range": "± 8390.21",
             "unit": "ns/iter"
           },
           {

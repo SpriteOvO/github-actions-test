@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1718228172948,
+  "lastUpdate": 1718228364998,
   "repoUrl": "https://github.com/SpriteOvO/github-actions-test",
   "entries": {
     "spdlog-rs on Linux": [
@@ -53,6 +53,60 @@ window.BENCHMARK_DATA = {
             "name": "bench_5_level_off",
             "value": 2.78,
             "range": "± 0.02",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "SpriteOvO@gmail.com",
+            "name": "Asuna",
+            "username": "SpriteOvO"
+          },
+          "committer": {
+            "email": "SpriteOvO@gmail.com",
+            "name": "Asuna",
+            "username": "SpriteOvO"
+          },
+          "distinct": true,
+          "id": "f2988e20b011373e1a0e3570fc2298f10396d069",
+          "message": "Update Cargo.toml",
+          "timestamp": "2024-06-13T05:38:49+08:00",
+          "tree_id": "686e6106a619d4768ce7c66789e06b3b3d7e5d6e",
+          "url": "https://github.com/SpriteOvO/github-actions-test/commit/f2988e20b011373e1a0e3570fc2298f10396d069"
+        },
+        "date": 1718228364338,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "bench_1_file",
+            "value": 215.01,
+            "range": "± 2.56",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_2_file_async",
+            "value": 197.32,
+            "range": "± 3.16",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_3_rotating_file_size",
+            "value": 219.75,
+            "range": "± 52.98",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_4_rotating_daily",
+            "value": 222.05,
+            "range": "± 32.30",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_5_level_off",
+            "value": 2.16,
+            "range": "± 0.54",
             "unit": "ns/iter"
           }
         ]

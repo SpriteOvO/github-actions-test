@@ -20,9 +20,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-
-            const summary_file = process.env['GITHUB_STEP_SUMMARY']
+            const write_summary = async (text: string) => Promise<void> {
+              const fs = require('fs');
+              await fs.writeFile(process.env['GITHUB_STEP_SUMMARY'], text, err => {
+                console.log(err)
+                process.exit(1)
+              });
+            }
 
             const { data } = await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
@@ -33,10 +37,10 @@ jobs:
             const previous_runs = all_runs
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
 
-            await fs.writeFile(summary_file, 'The last completed workflow run:\n')
-            await fs.writeFile(summary_file, `\`\`\`\n${previous_runs[0]}\n\`\`\`\n`)
-            await fs.writeFile(summary_file, 'All workflow runs:\n')
-            await fs.writeFile(summary_file, `\`\`\`\n${all_runs}\n\`\`\`\n`)
+            await write_summary('The last completed workflow run:\n')
+            await write_summary(`\`\`\`\n${previous_runs[0]}\n\`\`\`\n`)
+            await write_summary('All workflow runs:\n')
+            await write_summary(`\`\`\`\n${all_runs}\n\`\`\`\n`)
 
             return previous_runs[0].conclusion
   build:

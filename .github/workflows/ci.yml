@@ -2,24 +2,12 @@ name: CI
 
 on:
   push:
-    paths-ignore:
-      - '**.md'
-      - 'LICENSE'
 
   pull_request:
-    paths-ignore:
-      - '**.md'
-      - 'LICENSE'
 
   workflow_dispatch:
 
 env:
-  CARGO_TERM_COLOR: always
-  # When updating this, also update:
-  # - src/lib.rs
-  # - Cargo.toml
-  # - README.md
-  rust_minver: 1.56.0
 
 defaults:
   run:
@@ -33,27 +21,17 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Disable bench dependencies
-      run: ./.github/workflows/disable-bench-deps.sh
-    - name: Install Rust nightly
-      run: rustup toolchain install nightly
-    - name: Restore cargo caches
-      uses: Swatinem/rust-cache@v2
-    - name: Run benchmark
-      run: cargo +nightly bench --features "multi-thread,runtime-pattern" --bench spdlog_rs | tee bench-result.txt
-    - name: Discard irrelevant changes
-      run: git checkout -- spdlog/Cargo.toml
-    - name: Process results
-      uses: benchmark-action/github-action-benchmark@v1
+    - name: Get previous workflow runs
+      id: previous_runs
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: actions/github-script@v4
       with:
-        name: spdlog-rs on Linux
-        tool: cargo
-        output-file-path: bench-result.txt
-        benchmark-data-dir-path: docs/dev/bench
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        summary-always: true
-        comment-on-alert: true
-        alert-comment-cc-users: '@SpriteOvO'
-    - name: Deploy results to GitHub Pages
-      if: github.event_name != 'pull_request' && (github.ref_name == 'main' || github.ref_name == 'main-dev')
-      run: git push 'https://SpriteOvO:${{ secrets.GITHUB_TOKEN }}@github.com/SpriteOvO/github-actions-test.git' gh-pages:gh-pages
+        script: |
+          const { data: runs } = await github.actions.listWorkflowRuns({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            workflow_id: context.workflow,
+          });
+          console.log(runs);

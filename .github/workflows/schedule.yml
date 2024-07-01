@@ -1,22 +1,22 @@
-name: CI
+name: Scheduled build
 
 on:
-  push:
-  pull_request:
-  workflow_dispatch:
+  schedule:
+    - cron: "3 * * * *"
 
 defaults:
   run:
     shell: bash
 
+env:
+  build_workflow: .github/workflows/build.yml
+
 jobs:
-  bench:
-    strategy:
-      fail-fast: false
+  last-run:
     runs-on: 'ubuntu-latest'
+    outputs:
+      conclusion: ${{ steps.previous-runs.outputs.result }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
       - name: Get previous workflow runs
         id: previous-runs
         uses: actions/github-script@v7
@@ -25,10 +25,12 @@ jobs:
             const { data } = await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: './.github/workflows/ci.yml',
+              workflow_id: '${{ env.build_workflow }}',
             })
             const previous_runs = data.workflow_runs
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
             return previous_runs[0].conclusion
-      - name: Echo result
-        run: echo ${{steps.previous-runs.outputs.result}}
+  build:
+    needs: last-run
+    if: ${{ needs.last-run.outputs.conclusion }} == 'success'
+    uses: ${{ env.build_workflow }}

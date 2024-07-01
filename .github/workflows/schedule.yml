@@ -47,5 +47,5 @@ jobs:
             return previous_runs[0].conclusion
   build:
     needs: previous-runs
-    if: ${{ needs.previous-runs.outputs.last-conclusion }} == 'success'
+    if: ${{ needs.previous-runs.outputs.last-conclusion == 'success' }}
     uses: ./.github/workflows/build.yml

@@ -22,6 +22,10 @@ jobs:
           script: |
             const write_summary = async (text: string) => {
               const fs = require('fs')
+              await fs.writeFile(process.env['GITHUB_STEP_SUMMARY'], text, err => {
+                console.log(err)
+                process.exit(1)
+              })
             }
 
             const { data } = await github.rest.actions.listWorkflowRuns({
@@ -33,10 +37,6 @@ jobs:
             const previous_runs = all_runs
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
 
-            await write_summary('The last completed workflow run:\n')
-            await write_summary(`\`\`\`\n${previous_runs[0]}\n\`\`\`\n`)
-            await write_summary('All workflow runs:\n')
-            await write_summary(`\`\`\`\n${all_runs}\n\`\`\`\n`)
 
             return previous_runs[0].conclusion
   build:

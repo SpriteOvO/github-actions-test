@@ -30,4 +30,4 @@ jobs:
   build:
     needs: last-run
     if: ${{ needs.last-run.outputs.conclusion }} == 'success'
-    uses: .github/workflows/build.yml
+    uses: ./.github/workflows/build.yml

@@ -40,9 +40,9 @@ jobs:
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
 
             await write_summary('The last completed workflow run\n')
-            await write_summary(`\`\`\`\n${JSON.stringify(previous_runs[0], null, 2)}\n\`\`\`\n`)
+            await write_summary(`\`\`\`json\n${JSON.stringify(previous_runs[0], null, 2)}\n\`\`\`\n`)
             await write_summary('All workflow runs\n')
-            await write_summary(`\`\`\`\n${JSON.stringify(all_runs, null, 2)}\n\`\`\`\n`)
+            await write_summary(`\`\`\`json\n${JSON.stringify(all_runs, null, 2)}\n\`\`\`\n`)
 
             return previous_runs[0].conclusion
   build:

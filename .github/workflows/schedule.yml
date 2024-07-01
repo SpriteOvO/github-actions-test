@@ -10,10 +10,10 @@ defaults:
     shell: bash
 
 jobs:
-  last-run:
+  previous-runs:
     runs-on: 'ubuntu-latest'
     outputs:
-      conclusion: ${{ steps.previous-runs.outputs.result }}
+      last-conclusion: ${{ steps.previous-runs.outputs.result }}
     steps:
       - name: Get previous workflow runs
         id: previous-runs
@@ -40,12 +40,12 @@ jobs:
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
 
             await write_summary('The last completed workflow run\n')
-            await write_summary(`\`\`\`json\n${JSON.stringify(previous_runs[0], null, 2)}\n\`\`\`\n`)
+            await write_summary(`\`\`\`json\n${JSON.stringify(previous_runs[0], null, 4)}\n\`\`\`\n`)
             await write_summary('All workflow runs\n')
-            await write_summary(`\`\`\`json\n${JSON.stringify(all_runs, null, 2)}\n\`\`\`\n`)
+            await write_summary(`\`\`\`json\n${JSON.stringify(all_runs, null, 4)}\n\`\`\`\n`)
 
             return previous_runs[0].conclusion
   build:
-    needs: last-run
-    if: ${{ needs.last-run.outputs.conclusion }} == 'success'
+    needs: previous-runs
+    if: ${{ needs.previous-runs.outputs.last-conclusion }} == 'success'
     uses: ./.github/workflows/build.yml

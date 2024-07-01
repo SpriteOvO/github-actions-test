@@ -22,9 +22,11 @@ jobs:
           script: |
             const write_summary = async text => {
               const fs = require('fs')
-              await fs.writeFile(process.env['GITHUB_STEP_SUMMARY'], text, err => {
-                console.error(`failed to write summary: ${err}`)
-                process.exit(1)
+              await fs.appendFile(process.env['GITHUB_STEP_SUMMARY'], text, err => {
+                if (err) {
+                  console.error(`failed to write summary: ${err}`)
+                  process.exit(1)
+                }
               })
             }
 

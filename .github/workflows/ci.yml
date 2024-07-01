@@ -27,6 +27,6 @@ jobs:
           const { data: runs } = await github.rest.actions.listWorkflowRuns({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            workflow_id: context.workflow_ref,
+            workflow_id: ${{ github.workflow_ref }},
           });
           console.log(runs);

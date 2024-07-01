@@ -25,6 +25,8 @@ jobs:
           const { data } = await github.rest.actions.listWorkflowRuns({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            workflow_id: "ci.yml",
+            workflow_id: 'ci.yml',
           });
-          console.log(data);
+          const previous_runs = data.workflow_runs
+            .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed');
+          console.log(previous_runs);

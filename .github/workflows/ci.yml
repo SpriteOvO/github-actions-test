@@ -15,18 +15,20 @@ jobs:
       fail-fast: false
     runs-on: 'ubuntu-latest'
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Get previous workflow runs
-      id: previous_runs
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const { data } = await github.rest.actions.listWorkflowRuns({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            workflow_id: 'ci.yml',
-          });
-          const previous_runs = data.workflow_runs
-            .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed');
-          console.log(previous_runs);
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Get previous workflow runs
+        id: previous-runs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'ci.yml',
+            })
+            const previous_runs = data.workflow_runs
+              .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
+            return previous_runs[0].conclusion
+      - name: Echo result
+        run: echo ${{steps.previous-runs.outputs.result}}

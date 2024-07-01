@@ -1,6 +1,7 @@
 name: Scheduled build
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "3 * * * *"
 
@@ -30,9 +31,9 @@ jobs:
             const previous_runs = all_runs
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
 
-            await fs.writeFile(summary_file, `The last completed workflow run:\n`)
+            await fs.writeFile(summary_file, 'The last completed workflow run:\n')
             await fs.writeFile(summary_file, `\`\`\`\n${previous_runs[0]}\n\`\`\`\n`)
-            await fs.writeFile(summary_file, `All workflow runs:\n`)
+            await fs.writeFile(summary_file, 'All workflow runs:\n')
             await fs.writeFile(summary_file, `\`\`\`\n${all_runs}\n\`\`\`\n`)
             
             return previous_runs[0].conclusion

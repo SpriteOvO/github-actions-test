@@ -8,9 +8,6 @@ defaults:
   run:
     shell: bash
 
-env:
-  build_workflow: .github/workflows/build.yml
-
 jobs:
   last-run:
     runs-on: 'ubuntu-latest'
@@ -25,7 +22,7 @@ jobs:
             const { data } = await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: '${{ env.build_workflow }}',
+              workflow_id: 'build.yml',
             })
             const previous_runs = data.workflow_runs
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
@@ -33,4 +30,4 @@ jobs:
   build:
     needs: last-run
     if: ${{ needs.last-run.outputs.conclusion }} == 'success'
-    uses: ./${{ env.build_workflow }}
+    uses: .github/workflows/build.yml

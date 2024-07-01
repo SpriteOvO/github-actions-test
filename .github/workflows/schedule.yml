@@ -19,13 +19,22 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const summary_file = process.env['GITHUB_STEP_SUMMARY']
+
             const { data } = await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'build.yml',
             })
-            const previous_runs = data.workflow_runs
+            const all_runs = data.workflow_runs
+            const previous_runs = all_runs
               .filter(run => run.head_branch === '${{ github.ref_name }}' && run.status === 'completed')
+
+            await fs.writeFile(summary_file, `The last completed workflow run:\n`)
+            await fs.writeFile(summary_file, `\`\`\`\n${previous_runs[0]}\n\`\`\`\n`)
+            await fs.writeFile(summary_file, `All workflow runs:\n`)
+            await fs.writeFile(summary_file, `\`\`\`\n${all_runs}\n\`\`\`\n`)
+            
             return previous_runs[0].conclusion
   build:
     needs: last-run

@@ -20,6 +20,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
+
             const summary_file = process.env['GITHUB_STEP_SUMMARY']
 
             const { data } = await github.rest.actions.listWorkflowRuns({
@@ -35,7 +37,7 @@ jobs:
             await fs.writeFile(summary_file, `\`\`\`\n${previous_runs[0]}\n\`\`\`\n`)
             await fs.writeFile(summary_file, 'All workflow runs:\n')
             await fs.writeFile(summary_file, `\`\`\`\n${all_runs}\n\`\`\`\n`)
-            
+
             return previous_runs[0].conclusion
   build:
     needs: last-run

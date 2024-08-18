@@ -1,4 +1,4 @@
-name: CI
+name: RV
 
 on:
   push:
@@ -7,10 +7,12 @@ on:
   workflow_call:
 
 jobs:
-  build:
+  rv:
     strategy:
       fail-fast: false
-    runs-on: 'riscv-builders'
+    runs-on:
+      - riscv-builders
+      - soc-spacemit-k1
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

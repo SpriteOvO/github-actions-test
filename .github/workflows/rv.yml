@@ -10,9 +10,7 @@ jobs:
   rv:
     strategy:
       fail-fast: false
-    runs-on:
-      - riscv-builders
-      - soc-spacemit-k1
+    runs-on: riscv-builders
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

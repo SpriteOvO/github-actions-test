@@ -16,6 +16,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Echo
+        run: |
+          cat /aaaa
+          echo "is there?"
+          echo "b" > /aaaa
+          cat /aaaa
+          echo "there is."
       - name: Wait
         run: |
           sleep 30s

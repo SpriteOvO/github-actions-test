@@ -10,9 +10,9 @@ jobs:
   build:
     strategy:
       fail-fast: false
-    runs-on: 'ubuntu-latest'
+    runs-on: [self-hosted, '${{ github.repository }}']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build
-        run: exit 1
+      - name: Wait
+        run: sleep 30s

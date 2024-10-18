@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Echo
         run: |
-          cat /aaaa
+          cat /aaaa || true
           echo "is there?"
           echo "b" > /aaaa
           cat /aaaa

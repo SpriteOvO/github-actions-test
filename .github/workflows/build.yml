@@ -10,9 +10,13 @@ jobs:
   build:
     strategy:
       fail-fast: false
+      matrix:
+        id: [1, 2, 3]
     runs-on: [self-hosted, '${{ github.repository }}']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Wait
-        run: sleep 30s
+        run: |
+          sleep 30s
+          echo ${{ matrix.id }}

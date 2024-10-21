@@ -25,5 +25,4 @@ jobs:
           echo "there is."
       - name: Wait
         run: |
-          sleep 30s
           echo ${{ matrix.id }}

@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Fetch upstream
         run: |
-          git remote add tdesktop git@github.com:telegramdesktop/tdesktop.git
-          git fetch tdesktop
+          git remote add tdesktop https://github.com/telegramdesktop/tdesktop.git
+          git fetch tdesktop dev
       - name: Push to origin
         run: |
           git checkout -B tdesktop tdesktop/dev

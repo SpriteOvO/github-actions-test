@@ -1,0 +1,21 @@
+name: sync
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Fetch upstream
+        run: |
+          git remote add tdesktop git@github.com:telegramdesktop/tdesktop.git
+          git fetch tdesktop
+      - name: Push to origin
+        run: |
+          git checkout -B tdesktop tdesktop/dev
+          git push origin --force

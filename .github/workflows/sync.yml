@@ -8,7 +8,6 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,7 +15,16 @@ jobs:
         run: |
           git remote add tdesktop https://github.com/telegramdesktop/tdesktop.git
           git fetch tdesktop dev
-      - name: Push to origin
-        run: |
           git checkout -B tdesktop tdesktop/dev
-          git push origin --force
+      - name: Commit sync commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+          jq -n --arg upstream_commit $(git rev-parse HEAD) '$ARGS.named' > .temp
+          mv .github ._github
+
+          git add --all
+          git commit "Synchronize with upstream"
+      - name: Push to origin
+        run: git push origin --force

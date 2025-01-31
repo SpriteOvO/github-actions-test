@@ -21,10 +21,10 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-          jq -n --arg upstream_commit $(git rev-parse HEAD) '$ARGS.named' > .temp
+          jq -n --arg upstream-commit $(git rev-parse HEAD) '$ARGS.named' > .temp
           mv .github ._github
 
           git add --all
-          git commit "Synchronize with upstream"
+          git commit -m "Synchronize with upstream"
       - name: Push to origin
         run: git push origin --force

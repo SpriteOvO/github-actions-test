@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1718230454796,
+  "lastUpdate": 1738338510175,
   "repoUrl": "https://github.com/SpriteOvO/github-actions-test",
   "entries": {
     "spdlog-rs on Linux": [
@@ -269,6 +269,60 @@ window.BENCHMARK_DATA = {
             "name": "bench_5_level_off",
             "value": 2.47,
             "range": "± 0.02",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "SpriteOvO@gmail.com",
+            "name": "Asuna",
+            "username": "SpriteOvO"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "173fe48c791f49fb5f7d11b4d1a11378f22fa553",
+          "message": "Create test.yml",
+          "timestamp": "2025-01-31T23:47:21+08:00",
+          "tree_id": "b56acfb82298d2a30bfd718c109968b16edd781d",
+          "url": "https://github.com/SpriteOvO/github-actions-test/commit/173fe48c791f49fb5f7d11b4d1a11378f22fa553"
+        },
+        "date": 1738338509373,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "bench_1_file",
+            "value": 201.54,
+            "range": "± 6.11",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_2_file_async",
+            "value": 208.76,
+            "range": "± 4.87",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_3_rotating_file_size",
+            "value": 202,
+            "range": "± 3.92",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_4_rotating_daily",
+            "value": 203.42,
+            "range": "± 34.26",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "bench_5_level_off",
+            "value": 2.18,
+            "range": "± 0.03",
             "unit": "ns/iter"
           }
         ]

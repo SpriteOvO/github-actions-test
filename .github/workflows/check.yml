@@ -21,14 +21,14 @@ jobs:
             | select(.tier == 1 or .tier == 2)) \
             | sort_by(.tier)")
         echo "targets_matrix='$TARGETS'" >> "$GITHUB_OUTPUT"
+        echo $TARGETS | jq
 
   check-targets:
     needs: check-targets-matrix
     strategy:
       fail-fast: false
       matrix:
-        target: [{"tier":1,"target":"test"}]
-        # target: ${{ fromJSON(needs.check-targets-matrix.outputs.targets_matrix) }}
+        target: ${{ fromJSON(needs.check-targets-matrix.outputs.targets_matrix) }}
     runs-on: 'ubuntu-latest'
     steps:
     - name: Checkout repository

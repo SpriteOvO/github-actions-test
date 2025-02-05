@@ -34,6 +34,8 @@ jobs:
       run: ./.github/workflows/disable-bench-deps.sh
     - name: Install dependencies
       run: sudo bash ./.github/workflows/install-deps.sh
+    - name: Install Rust nightly
+      run: rustup toolchain install nightly
     - name: Install Rust tier ${{ matrix.tier }} target ${{ matrix.target }}
       run: rustup target add ${{ matrix.target }}
     - name: Restore cargo caches

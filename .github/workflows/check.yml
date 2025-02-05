@@ -15,11 +15,11 @@ jobs:
       id: gen-matrix
       run: |
         TARGETS=$(rustc +nightly --print all-target-specs-json -Z unstable-options \
-          | jq -c 'map_values(.metadata.tier) \
+          | jq -c "map_values(.metadata.tier) \
             | to_entries \
             | map({tier: .value, target: .key} \
             | select(.tier == 1 or .tier == 2)) \
-            | sort_by(.tier)')
+            | sort_by(.tier)")
         echo "targets_matrix='$TARGETS'" >> "$GITHUB_OUTPUT"
 
   check-targets:

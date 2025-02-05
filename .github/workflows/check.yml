@@ -20,7 +20,7 @@ jobs:
             | map({tier: .value, target: .key} \
             | select(.tier == 1 or .tier == 2)) \
             | sort_by(.tier)")
-        echo "targets_matrix='$TARGETS'" >> "$GITHUB_OUTPUT"
+        echo "targets_matrix=$TARGETS" >> "$GITHUB_OUTPUT"
         echo $TARGETS | jq
 
   check-targets:

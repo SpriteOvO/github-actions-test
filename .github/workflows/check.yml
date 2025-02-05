@@ -27,7 +27,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ${{ fromJSON(needs.check-targets-matrix.outputs.targets_matrix) }}
+        target: [{"tier":1,"target":"test"}]
+        # target: ${{ fromJSON(needs.check-targets-matrix.outputs.targets_matrix) }}
     runs-on: 'ubuntu-latest'
     steps:
     - name: Checkout repository

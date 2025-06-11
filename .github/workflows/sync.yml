@@ -43,7 +43,7 @@ jobs:
           # https://stackoverflow.com/a/4912267/13433323
           git checkout tdesktop
           git read-tree -u --reset tdesktop-orig
-          git rev-parse upstream > .git/MERGE_HEAD
+          git rev-parse tdesktop-orig > .git/MERGE_HEAD
           
           jq -n \
             --argjson git \

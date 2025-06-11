@@ -16,6 +16,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Setup git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Fetch upstream
         run: |
           git remote add upstream https://github.com/telegramdesktop/tdesktop.git
@@ -57,6 +61,8 @@ jobs:
 
           # Disable GitHub Actions
           mv .github .github_
+
+          git add -A
           git commit -m "TEMP"
       - name: Commit synchronization commit
         run: |
@@ -65,7 +71,7 @@ jobs:
           git checkout tdesktop
           git read-tree -u --reset tdesktop-orig
           git rev-parse tdesktop-orig > .git/MERGE_HEAD
-          
+
           jq -n \
             --argjson git \
               "$(jq -n \
@@ -78,8 +84,6 @@ jobs:
             '{ sync: $ARGS.named }' > .temp
 
           git add -A
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Synchronize with upstream"
       - name: Push to origin
         run: git push -u origin tdesktop

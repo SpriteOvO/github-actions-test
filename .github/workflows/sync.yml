@@ -37,25 +37,8 @@ jobs:
           git checkout -B tdesktop-orig $COMMIT
 
           [ "$(git rev-parse HEAD)" = "$COMMIT" ] || exit 1
-      - name: Commit synchronization commit
+      - name: Regularize submodules and disable GitHub Actions
         run: |
-          # Simulation #7
-          # https://stackoverflow.com/a/4912267/13433323
-          git checkout tdesktop
-          git read-tree -u --reset tdesktop-orig
-          git rev-parse tdesktop-orig > .git/MERGE_HEAD
-          
-          jq -n \
-            --argjson git \
-              "$(jq -n \
-                --arg repo "https://github.com/telegramdesktop/tdesktop.git" \
-                --arg commit "$UPSTREAM_COMMIT" \
-                --arg tag "$UPSTREAM_TAG" \
-                '$ARGS.named'
-              )" \
-            --argjson timestamp $(date +%s) \
-            '{ sync: $ARGS.named }' > .temp
-
           # Recursively make all submodules into normal files so that we can modify them in-place
           # https://stackoverflow.com/a/1789374
           git submodule update --recursive --init
@@ -74,6 +57,24 @@ jobs:
 
           # Disable GitHub Actions
           mv .github .github_
+      - name: Commit synchronization commit
+        run: |
+          # Simulation #7
+          # https://stackoverflow.com/a/4912267/13433323
+          git checkout tdesktop
+          git read-tree -u --reset tdesktop-orig
+          git rev-parse tdesktop-orig > .git/MERGE_HEAD
+          
+          jq -n \
+            --argjson git \
+              "$(jq -n \
+                --arg repo "https://github.com/telegramdesktop/tdesktop.git" \
+                --arg commit "$UPSTREAM_COMMIT" \
+                --arg tag "$UPSTREAM_TAG" \
+                '$ARGS.named'
+              )" \
+            --argjson timestamp $(date +%s) \
+            '{ sync: $ARGS.named }' > .temp
 
           git add -A
           git config user.name "github-actions[bot]"

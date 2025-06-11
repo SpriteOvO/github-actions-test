@@ -1,0 +1,81 @@
+name: Synchronize with upstream
+
+on:
+  workflow_dispatch:
+    inputs:
+      upstream-tag:
+        description: 'Upstream Git tag to synchronize with (default latest release)'
+        required: false
+        type: string
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/telegramdesktop/tdesktop.git
+
+          if [[ -z "${{ inputs.upstream-tag }}" ]]; then
+            API_ARG="latest"
+          else
+            API_ARG="tags/${{ inputs.upstream-tag }}"
+          fi
+          RELEASE=$(curl -s https://api.github.com/repos/telegramdesktop/tdesktop/releases/$API_ARG)
+          TAG=$(echo $RELEASE | jq -r '.tag_name')
+          COMMIT=$(echo $RELEASE | jq -r '.target_commitish')
+
+          echo "UPSTREAM_TAG=$TAG" >> $GITHUB_ENV
+          echo "UPSTREAM_COMMIT=$COMMIT" >> $GITHUB_ENV
+          echo "Synchronizing with upstream tag '$TAG' ($COMMIT)"
+
+          git fetch upstream $COMMIT
+          git checkout -B tdesktop-orig $COMMIT
+
+          [ "$(git rev-parse HEAD)" = "$COMMIT" ] || exit 1
+      - name: Commit synchronization commit
+        run: |
+          # Simulation #7
+          # https://stackoverflow.com/a/4912267/13433323
+          git checkout tdesktop
+          git read-tree -u --reset tdesktop-orig
+          git rev-parse upstream > .git/MERGE_HEAD
+          
+          jq -n \
+            --argjson git \
+              "$(jq -n \
+                --arg repo "https://github.com/telegramdesktop/tdesktop.git" \
+                --arg commit "$UPSTREAM_COMMIT" \
+                --arg tag "$UPSTREAM_TAG" \
+                '$ARGS.named'
+              )" \
+            --argjson timestamp $(date +%s) \
+            '{ sync: $ARGS.named }' > .temp
+
+          # Recursively make all submodules into normal files so that we can modify them in-place
+          # https://stackoverflow.com/a/1789374
+          git submodule update --recursive --init
+          find . -name ".gitmodules" -printf '%d\t%p\n' \
+            | sort -Vr \
+            | cut -f 2- \
+            | xargs -I {g} bash -c '\
+              cd $(dirname {g}) \
+              && cat .gitmodules \
+              | grep "path = " \
+              | sed "s/^.*path = //" \
+              | xargs -I {m} bash -c "\
+                git rm --cached {m} && \
+                rm -rf {m}/.git" \
+              && git rm .gitmodules'
+
+          # Disable GitHub Actions
+          mv .github .github_
+
+          git add -A
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Synchronize with upstream"
+      - name: Push to origin
+        run: git push -u origin tdesktop

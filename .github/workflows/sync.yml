@@ -57,6 +57,7 @@ jobs:
 
           # Disable GitHub Actions
           mv .github .github_
+          git commit -m "TEMP"
       - name: Commit synchronization commit
         run: |
           # Simulation #7

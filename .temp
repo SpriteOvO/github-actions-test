@@ -1,3 +1,10 @@
 {
-  "upstream-commit": "bf48025d12fcbdda60b29c932cd7e22b37c6fd2f"
+  "sync": {
+    "git": {
+      "repo": "https://github.com/telegramdesktop/tdesktop.git",
+      "commit": "75b33c906dd5ba00cbedf8fbad4f85b8a829fd95",
+      "tag": "v5.14.0"
+    },
+    "timestamp": 1749661701
+  }
 }

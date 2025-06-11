@@ -2,9 +2,9 @@
   "sync": {
     "git": {
       "repo": "https://github.com/telegramdesktop/tdesktop.git",
-      "commit": "75b33c906dd5ba00cbedf8fbad4f85b8a829fd95",
-      "tag": "v5.14.0"
+      "commit": "7d88c48c39b2d88b0af29a147691613653b3bc9f",
+      "tag": "v5.14.1"
     },
-    "timestamp": 1749661701
+    "timestamp": 1749661934
   }
 }

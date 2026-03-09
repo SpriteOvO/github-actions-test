@@ -11,7 +11,7 @@ jobs:
       - name: Install wine
         run: sudo apt-get install -y wine64 python3 msitools ca-certificates winbind
       - name: Clone tdesktop
-        run: git clone https://github.com/telegramdesktop/tdesktop.git --resursive
+        run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
       - name: Clone msvc-wine
         run: git clone https://github.com/mstorsjo/msvc-wine.git
       - name: Setup MSVC

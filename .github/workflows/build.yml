@@ -8,5 +8,7 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      - name: Install wine
+        run: scoop install wine
       - name: wine hello
         run: wine cmd /c "echo hello"

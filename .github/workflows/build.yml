@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install wine
-        run: scoop install wine
+        run: apt-get install wine
       - name: wine hello
         run: wine cmd /c "echo hello"

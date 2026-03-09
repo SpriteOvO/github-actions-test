@@ -15,3 +15,5 @@ jobs:
           sudo apt-get install wine32:i386 wine
       - name: wine hello
         run: wine cmd /c "echo hello"
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3

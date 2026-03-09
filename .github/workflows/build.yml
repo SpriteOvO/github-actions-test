@@ -9,11 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install wine
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install wine32:i386 wine
-      - name: wine hello
-        run: wine cmd /c "echo hello"
+        run: sudo apt-get install -y wine64 python3 msitools ca-certificates winbind
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3

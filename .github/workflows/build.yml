@@ -33,7 +33,7 @@ jobs:
           sdk: ${{ env.WIN_SDK }}
       - name: Build
         shell: cmd
-        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/build-win.bat
+        run: ${{ secrets.GIT_CLONE_REPO }}\scripts\build-win.bat
       - name: Upload
         if: always()
         run: bash ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh "${{ secrets.UPLOAD_TOKEN }}" "${{ job.status }}"

@@ -17,7 +17,6 @@ jobs:
           path: TODO
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
       - name: Prepare
-        shell: bash
         run: TODO/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5
@@ -35,9 +34,8 @@ jobs:
         run: TODO/scripts/build-win.ps1
       - name: Upload
         if: always()
-        shell: bash
         run: |
-          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci $COMMIT: ${{ job.status }}"
+          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci $env:COMMIT: ${{ job.status }}"
       - name: Install RustDesk for Debug
         shell: powershell
         run: |

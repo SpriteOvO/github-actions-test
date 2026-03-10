@@ -13,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          repository: ${{ secrets.GIT_CLONE_REPO }}
-          path: TODO
+          repository: ${{ secrets.GIT_CLONE_OWNER }}/${{ secrets.GIT_CLONE_REPO }}
+          path: ${{ secrets.GIT_CLONE_REPO }}
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
       - name: Prepare
-        run: TODO/scripts/prepare.sh
+        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5
         with:
@@ -31,11 +31,11 @@ jobs:
           arch: x64
           sdk: ${{ env.WIN_SDK }}
       - name: Build
-        run: TODO/scripts/build-win.ps1
+        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/build-win.ps1
       - name: Upload
         if: always()
         run: |
-          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci ${env:COMMIT}: ${{ job.status }}"
+          ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci ${env:COMMIT}: ${{ job.status }}"
       - name: Install RustDesk for Debug
         shell: powershell
         run: |

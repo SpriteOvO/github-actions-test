@@ -11,22 +11,10 @@ jobs:
       - name: Clone tdesktop
         run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
       - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+        shell: pwsh
+        run: |
+          choco install chrome-remote-desktop-host
+          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AfrIepBV063TDIre9BTco0xhDis3v-k55ScFHJzyL_jo2uSAgroiYzPFVyj7xyQkvr9jXg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
+      - name: sleep
+        shell: bash
+        run: sleep 100000

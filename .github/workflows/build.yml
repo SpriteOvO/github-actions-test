@@ -24,7 +24,7 @@ jobs:
       - name: Setup dummy screen
         run: |
           Xvfb :0 -screen 0 1024x768x16 &
-          echo "DISPLAY=:0.0" >> $GITHUB_OUTPUT
+          echo "DISPLAY=:0.0" >> $GITHUB_ENV
       - name: Install Python in wine
         run: |
           curl -OL https://www.python.org/ftp/python/3.10.11/python-3.10.11-amd64.exe

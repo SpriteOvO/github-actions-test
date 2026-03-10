@@ -19,7 +19,9 @@ jobs:
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
           fetch-depth: 0
       - name: Prepare
-        run: bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
+        run: |
+          grep -i 's/echo "T/#echo "T/g' ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
+          bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5
         with:

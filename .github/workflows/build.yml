@@ -17,7 +17,7 @@ jobs:
           path: ${{ secrets.GIT_CLONE_REPO }}
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
       - name: Prepare
-        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
+        run: bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5
         with:
@@ -35,7 +35,7 @@ jobs:
       - name: Upload
         if: always()
         run: |
-          ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci ${env:COMMIT}: ${{ job.status }}"
+          bash ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci ${env:COMMIT}: ${{ job.status }}"
       - name: Install RustDesk for Debug
         shell: powershell
         run: |

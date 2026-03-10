@@ -10,11 +10,13 @@ jobs:
     steps:
       - name: Clone tdesktop
         run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
-      - name: Setup tmate session
-        shell: cmd
+      - name: Install RustDesk for Debug
+        shell: powershell
         run: |
-          choco install chrome-remote-desktop-host
-          "%PROGRAMFILES(X86)%\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AfrIepCaifjkeaF5yOWftN_BU85abRRVVWQ-zMv5ikFdeQPdpk-BG02fR8QE5_oYq5ReCw" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=%COMPUTERNAME%
-      - name: sleep
-        shell: bash
-        run: sleep 100000
+          choco install rustdesk.install
+          cd "C:\Program Files\RustDesk\"
+          ./rustdesk.exe --install-service
+          ./rustdesk.exe --get-id | Out-String
+          ./rustdesk.exe --password AWeakpASSword
+      - name: Block for remote control
+        run: sleep 10000000

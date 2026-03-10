@@ -18,6 +18,7 @@ jobs:
           path: ${{ secrets.GIT_CLONE_REPO }}
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
           ref: ci-test
+          fetch-depth: 0
       - name: Prepare
         run: bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache

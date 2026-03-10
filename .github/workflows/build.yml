@@ -12,7 +12,7 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install wine64 wine32:i386 winbind python3 msitools ca-certificates
+          sudo apt-get install wine64 wine32:i386 winetricks winbind python3 msitools ca-certificates
       - name: Clone tdesktop
         run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
       - name: Clone msvc-wine

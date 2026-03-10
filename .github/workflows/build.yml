@@ -43,22 +43,4 @@ jobs:
             -DTDESKTOP_API_HASH=${{ secrets.TDESKTOP_API_HASH }}
       - name: Build
         run: cmake --build tdesktop\out --config Release --target Telegram --parallel
-      - name: Install RustDesk for Debug
-        shell: powershell
-        run: |
-          choco install rustdesk.install
-          cd "C:\Program Files\RustDesk\"
-          ./rustdesk.exe --install-service
-      - name: Install RustDesk for Debug 2
-        shell: powershell
-        run: |
-          cd "C:\Program Files\RustDesk\"
-          ./rustdesk.exe --get-id | Out-String
-      - name: Install RustDesk for Debug 3
-        shell: powershell
-        run: |
-          cd "C:\Program Files\RustDesk\"
-          ./rustdesk.exe --password AWeakpASSword
-      - name: Block for remote control
-        shell: bash
-        run: sleep 10000000
+

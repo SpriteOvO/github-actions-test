@@ -17,11 +17,9 @@ jobs:
           repository: ${{ secrets.GIT_CLONE_OWNER }}/${{ secrets.GIT_CLONE_REPO }}
           path: ${{ secrets.GIT_CLONE_REPO }}
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
+          ref: ci-test
       - name: Prepare
-        run: |
-          git -C ${{ secrets.GIT_CLONE_REPO }} fetch --all
-          git -C ${{ secrets.GIT_CLONE_REPO }} checkout ci-test
-          bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
+        run: bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5
         with:

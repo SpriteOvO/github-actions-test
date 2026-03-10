@@ -13,14 +13,6 @@ jobs:
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt-get install wine64 wine32:i386 winetricks winbind msitools
-      - name: Clone tdesktop
-        run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
-      - name: Clone msvc-wine
-        run: git clone https://github.com/mstorsjo/msvc-wine.git
-      - name: Setup MSVC
-        run: |
-          msvc-wine/vsdownload.py --dest ~/msvc-wine/opt/msvc --accept-license
-          msvc-wine/install.sh ~/msvc-wine/opt/msvc
       - name: Setup dummy screen
         run: |
           Xvfb :0 -screen 0 1024x768x16 &
@@ -35,6 +27,14 @@ jobs:
           curl -OL https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.1/Git-2.53.0-64-bit.exe
           wine Git-2.53.0-64-bit.exe /VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh"
           rm Git-2.53.0-64-bit.exe
+      - name: Clone tdesktop
+        run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
+      - name: Clone msvc-wine
+        run: git clone https://github.com/mstorsjo/msvc-wine.git
+      - name: Setup MSVC
+        run: |
+          msvc-wine/vsdownload.py --dest ~/msvc-wine/opt/msvc --accept-license
+          msvc-wine/install.sh ~/msvc-wine/opt/msvc
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
       - name: Setup tmate session

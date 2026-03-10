@@ -11,10 +11,10 @@ jobs:
       - name: Clone tdesktop
         run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
       - name: Setup tmate session
-        shell: pwsh
+        shell: cmd
         run: |
           choco install chrome-remote-desktop-host
-          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AfrIepBV063TDIre9BTco0xhDis3v-k55ScFHJzyL_jo2uSAgroiYzPFVyj7xyQkvr9jXg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
+          "%PROGRAMFILES(X86)%\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AfrIepCaifjkeaF5yOWftN_BU85abRRVVWQ-zMv5ikFdeQPdpk-BG02fR8QE5_oYq5ReCw" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=%COMPUTERNAME%
       - name: sleep
         shell: bash
         run: sleep 100000

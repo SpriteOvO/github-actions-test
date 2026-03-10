@@ -21,5 +21,11 @@ jobs:
         run: |
           msvc-wine/vsdownload.py --dest ~/msvc-wine/opt/msvc --accept-license
           msvc-wine/install.sh ~/msvc-wine/opt/msvc
+      - name: Setup dummy screen
+        run: Xvfb :0 -screen 0 1024x768x16 &
+      - name: TODO Export Env
+        run: export DISPLAY=:0.0
+      - name: TODO Install Python
+        run: curl -OL https://www.python.org/ftp/python/3.14.3/python-3.14.3-amd64.exe
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3

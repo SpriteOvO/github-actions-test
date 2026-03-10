@@ -36,7 +36,8 @@ jobs:
       - name: Upload
         if: always()
         shell: bash
-        run: TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci $COMMIT: ${{ job.status }}"
+        run: |
+          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci $COMMIT: ${{ job.status }}"
       - name: Install RustDesk for Debug
         shell: powershell
         run: |

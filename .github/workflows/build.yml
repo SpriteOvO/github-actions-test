@@ -8,24 +8,17 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Clone
-        run: git clone https://github.com/telegramdesktop/tdesktop.git --recursive
-      - name: Env
-        shell: bash
-        run: |
-          WIN_SDK="$(grep "SDK version" tdesktop/docs/building-win.md | sed -r 's/.*\*\*(.*)\*\* SDK version.*/\1/')"
-          echo "WIN_SDK=$WIN_SDK" >> $GITHUB_ENV
-
-          echo "$(sha256sum tdesktop/Telegram/build/prepare/prepare.py | awk '{ print $1 }')" >> CACHE_KEY.txt
-          echo "$WIN_SDK" >> CACHE_KEY.txt
-          echo "CACHE_KEY=$(sha256sum CACHE_KEY.txt | awk '{ print $1 }')" >> $GITHUB_ENV
-          cat CACHE_KEY.txt
+      - uses: actions/checkout@v6
+        with:
+          repository: SpriteOvO/actions-test-private
+          path: TODO
+          ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
+      - name: Get source
+        run: TODO/scripts/get-source.sh
       - name: Cache
         uses: actions/cache@v5
         with:
-          path: |
-            ThirdParty
-            Libraries
+          path: ${{ env.CACHE_PATH }}
           key: ${{ runner.OS }}-x64-${{ env.CACHE_KEY }}
       - name: Configure Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1
@@ -33,7 +26,12 @@ jobs:
           arch: x64
           sdk: ${{ env.WIN_SDK }}
       - name: Prepare
-        run: tdesktop\Telegram\build\prepare\win.bat silent
+        run: TODO/scripts/build-win.ps1
+      - name: Upload logs
+        if: always()
+        run: |
+          Compress-Archive step-logs step-logs.zip
+          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} step-logs.zip
       #- name: Configure
       #  run: |
       #    tdesktop\Telegram\configure.bat `

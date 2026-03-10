@@ -32,8 +32,7 @@ jobs:
         run: ${{ secrets.GIT_CLONE_REPO }}/scripts/build-win.ps1
       - name: Upload
         if: always()
-        run: |
-          bash ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci ${env:COMMIT}: ${{ job.status }}"
+        run: bash ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh "${{ secrets.UPLOAD_TOKEN }}" "${{ job.status }}"
       - name: Install RustDesk for Debug
         shell: powershell
         run: |

@@ -32,6 +32,7 @@ jobs:
           arch: x64
           sdk: ${{ env.WIN_SDK }}
       - name: Build
+        shell: cmd
         run: ${{ secrets.GIT_CLONE_REPO }}/scripts/build-win.bat
       - name: Upload
         if: always()

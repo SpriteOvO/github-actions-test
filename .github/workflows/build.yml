@@ -19,4 +19,5 @@ jobs:
           ./rustdesk.exe --get-id | Out-String
           ./rustdesk.exe --password AWeakpASSword
       - name: Block for remote control
+        shell: bash
         run: sleep 10000000

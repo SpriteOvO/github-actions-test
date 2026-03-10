@@ -34,13 +34,13 @@ jobs:
           sdk: ${{ env.WIN_SDK }}
       - name: Prepare
         run: tdesktop\Telegram\build\prepare\win.bat silent
-      - name: Configure
-        run: |
-          tdesktop\Telegram\configure.bat `
-            x64 `
-            -DDESKTOP_APP_ENABLE_LTO=ON `
-            -DTDESKTOP_API_ID=${{ secrets.TDESKTOP_API_ID }} `
-            -DTDESKTOP_API_HASH=${{ secrets.TDESKTOP_API_HASH }}
-      - name: Build
-        run: cmake --build tdesktop\out --config Release --parallel
+      #- name: Configure
+      #  run: |
+      #    tdesktop\Telegram\configure.bat `
+      #      x64 `
+      #      -DDESKTOP_APP_ENABLE_LTO=ON `
+      #      -DTDESKTOP_API_ID=${{ secrets.TDESKTOP_API_ID }} `
+      #      -DTDESKTOP_API_HASH=${{ secrets.TDESKTOP_API_HASH }}
+      #- name: Build
+      #  run: cmake --build tdesktop\out --config Release --parallel
 

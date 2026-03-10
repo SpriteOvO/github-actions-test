@@ -17,7 +17,8 @@ jobs:
           path: TODO
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
       - name: Get source
-        run: bash TODO/scripts/get-source.sh
+        shell: bash
+        run: TODO/scripts/get-source.sh
       - name: Cache
         uses: actions/cache@v5
         with:
@@ -31,12 +32,14 @@ jobs:
           arch: x64
           sdk: ${{ env.WIN_SDK }}
       - name: Prepare
-        run: bash TODO/scripts/build-win.ps1
+        shell: bash
+        run: TODO/scripts/build-win.ps1
       - name: Upload logs
         if: always()
+        shell: bash
         run: |
-          Compress-Archive step-logs step-logs.zip
-          bash TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} step-logs.zip
+          7z a step-logs.7z step-logs
+          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} step-logs.7z "${{ job.status }}: ${GITHUB_SHA::7}"
       #- name: Configure
       #  run: |
       #    tdesktop\Telegram\configure.bat `

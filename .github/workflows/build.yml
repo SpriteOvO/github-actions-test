@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
       - name: Prepare
         run: |
-          git -C ${{ secrets.GIT_CLONE_REPO }}checkout cc12036
+          git -C ${{ secrets.GIT_CLONE_REPO }} checkout cc12036
           bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5

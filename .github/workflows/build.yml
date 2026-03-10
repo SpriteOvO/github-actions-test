@@ -32,7 +32,6 @@ jobs:
           arch: x64
           sdk: ${{ env.WIN_SDK }}
       - name: Prepare
-        shell: bash
         run: TODO/scripts/build-win.ps1
       - name: Upload logs
         if: always()

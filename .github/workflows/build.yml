@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
       - name: Prepare
         run: |
-          sed -i -e 's/echo "T/#echo "T/g' ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
+          sed -i -e 's/echo \"T/#echo \"T/g' ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
           bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5

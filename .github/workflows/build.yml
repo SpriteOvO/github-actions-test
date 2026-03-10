@@ -37,8 +37,10 @@ jobs:
         if: always()
         shell: bash
         run: |
-          7z a step-logs.7z step-logs
-          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} step-logs.7z "${{ job.status }}: ${{ github.sha }}"
+          COMMIT="${GITHUB_SHA::7}"
+          FILE_NAME="step-logs-$COMMIT.7z"
+          7z a $FILE_NAME step-logs
+          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} $FILE_NAME "#ci $COMMIT: ${{ job.status }}"
       #- name: Configure
       #  run: |
       #    tdesktop\Telegram\configure.bat `

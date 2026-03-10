@@ -16,9 +16,9 @@ jobs:
           repository: SpriteOvO/actions-test-private
           path: TODO
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
-      - name: Get source
+      - name: Prepare
         shell: bash
-        run: TODO/scripts/get-source.sh
+        run: TODO/scripts/prepare.sh
       - name: Cache
         uses: actions/cache@v5
         with:
@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           7z a step-logs.7z step-logs
-          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} step-logs.7z "${{ job.status }}: ${GITHUB_SHA::7}"
+          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} step-logs.7z "${{ job.status }}: ${{ github.sha }}"
       #- name: Configure
       #  run: |
       #    tdesktop\Telegram\configure.bat `

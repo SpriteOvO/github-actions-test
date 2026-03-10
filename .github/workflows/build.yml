@@ -19,6 +19,7 @@ jobs:
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
       - name: Prepare
         run: |
+          git -C ${{ secrets.GIT_CLONE_REPO }} fetch --all
           git -C ${{ secrets.GIT_CLONE_REPO }} checkout ci-test
           bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Cache

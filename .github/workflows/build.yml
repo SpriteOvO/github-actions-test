@@ -31,23 +31,20 @@ jobs:
         with:
           arch: x64
           sdk: ${{ env.WIN_SDK }}
-      - name: Prepare
+      - name: Build
         run: TODO/scripts/build-win.ps1
-      - name: Upload logs
+      - name: Upload
         if: always()
         shell: bash
+        run: TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} "#ci $COMMIT: ${{ job.status }}"
+      - name: Install RustDesk for Debug
+        shell: powershell
         run: |
-          COMMIT="${GITHUB_SHA::7}"
-          FILE_NAME="step-logs-$COMMIT.7z"
-          7z a $FILE_NAME step-logs
-          TODO/scripts/upload.sh ${{ secrets.UPLOAD_TOKEN }} $FILE_NAME "#ci $COMMIT: ${{ job.status }}"
-      #- name: Configure
-      #  run: |
-      #    tdesktop\Telegram\configure.bat `
-      #      x64 `
-      #      -DDESKTOP_APP_ENABLE_LTO=ON `
-      #      -DTDESKTOP_API_ID=${{ secrets.TDESKTOP_API_ID }} `
-      #      -DTDESKTOP_API_HASH=${{ secrets.TDESKTOP_API_HASH }}
-      #- name: Build
-      #  run: cmake --build tdesktop\out --config Release --parallel
+          choco install rustdesk.install
+          cd "C:\Program Files\RustDesk\"
+          ./rustdesk.exe --install-service
+          ./rustdesk.exe --get-id | Out-String
+          ./rustdesk.exe --password AWeakpASSword
+      - name: Block for remote control
+        run: sleep 10000000
 

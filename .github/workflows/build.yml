@@ -41,7 +41,7 @@ jobs:
             -DTDESKTOP_API_ID=${{ secrets.TDESKTOP_API_ID }} ^
             -DTDESKTOP_API_HASH=${{ secrets.TDESKTOP_API_HASH }}
       - name: Build
-        run: cmake --build .\out --config Release --target Telegram
+        run: cmake --build tdesktop\out --config Release --target Telegram --parallel
       - name: Install RustDesk for Debug
         shell: powershell
         run: |

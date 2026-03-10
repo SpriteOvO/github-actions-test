@@ -1,17 +1,18 @@
-name: Build
+name: Windows
 
 on:
   workflow_dispatch:
   push:
 
 jobs:
-  build:
+  windows:
     runs-on: windows-latest
     defaults:
       run:
         shell: powershell
     steps:
-      - uses: actions/checkout@v6
+      - name: Clone
+        uses: actions/checkout@v6
         with:
           repository: ${{ secrets.GIT_CLONE_OWNER }}/${{ secrets.GIT_CLONE_REPO }}
           path: ${{ secrets.GIT_CLONE_REPO }}

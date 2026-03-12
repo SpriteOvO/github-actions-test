@@ -22,7 +22,7 @@ jobs:
           EOL
 
           chmod +x arch-run
-          ln -s $(pwd)/arch-run /bin/arch-run
+          sudo ln -s $(pwd)/arch-run /bin/arch-run
       - name: Bootstrap ArchLinux
         shell: arch-run ${0}
         run: |

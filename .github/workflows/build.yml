@@ -8,6 +8,14 @@ jobs:
   archlinux:
     runs-on: ubuntu-latest
     steps:
+      - name: Clone
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ secrets.GIT_CLONE_OWNER }}/${{ secrets.GIT_CLONE_REPO }}
+          path: ${{ secrets.GIT_CLONE_REPO }}
+          ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
+          ref: ci-test
+          fetch-depth: 0
       - name: Download ArchLinux bootstrap
         run: |
           curl -OL https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.zst
@@ -32,26 +40,15 @@ jobs:
           pacman -Syyu --noconfirm base-devel devtools sudo
           useradd -m builder
           echo 'builder ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
-      - name: Setup tmate session
-        if: always()
-        uses: mxschmitt/action-tmate@v3
+      - name: Move repo into builder
+        run: sudo mv ${{ secrets.GIT_CLONE_REPO }} arch/root.x86_64/home/builder/${{ secrets.GIT_CLONE_REPO }}
       - name: Build
         shell: arch-run builder {0}
         run: |
-          #git clone https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop.git
-          #cd telegram-desktop
-          #makepkg -s --noconfirm
+          sudo chown -R builder ${{ secrets.GIT_CLONE_REPO }}
+          git clone https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop.git
+          cd telegram-desktop
+          # makepkg -s --noconfirm
       - name: Setup tmate session
         if: always()
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        if: always()
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        if: always()
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
-        if: always()
-        uses: mxschmitt/action-tmate@v3
-      - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3

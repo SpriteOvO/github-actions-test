@@ -15,7 +15,7 @@ jobs:
           sudo tar xf archlinux-bootstrap-x86_64.tar.zst -C arch --numeric-owner
           echo 'arch_run="sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/"' >> $GITHUB_ENV
       - name: Bootstrap ArchLinux
-        shell: $arch_run bash {0}
+        shell: '"sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/" bash {0}'
         run: |
           pacman-key --init
           pacman-key --populate

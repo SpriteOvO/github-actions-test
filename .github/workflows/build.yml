@@ -24,7 +24,7 @@ jobs:
           chmod +x arch-run
           sudo ln -s $(pwd)/arch-run /bin/arch-run
       - name: Bootstrap ArchLinux
-        shell: arch-run ${0}
+        shell: arch-run {0}
         run: |
           pacman-key --init
           pacman-key --populate

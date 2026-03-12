@@ -38,7 +38,7 @@ jobs:
           $arch_run pacman-key --populate
           $arch_run pacman -Syyu --noconfirm base-devel devtools sudo
           $arch_run useradd -m builder
-          $arch_run 'echo "builder ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers'
+          $arch_run echo 'builder ALL=(ALL:ALL) NOPASSWD: ALL' '>>' /etc/sudoers
 
           sudo mv ${{ secrets.GIT_CLONE_REPO }} arch/root.x86_64/home/builder/${{ secrets.GIT_CLONE_REPO }}
       - name: Move repo into builder

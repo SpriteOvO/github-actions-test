@@ -19,24 +19,27 @@ jobs:
 
           cat > arch-run << 'EOL'
           #!/bin/bash
-          name=$(basename $1)
-          sudo cp $1 arch/root.x86_64/mnt/$name
-          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ bash -c "cd ~ && bash /mnt/$name"
+          name=$(basename $2)
+          sudo cp $2 arch/root.x86_64/mnt/$name
+          sudo arch/root.x86_64/bin/arch-chroot -u $1 arch/root.x86_64/ bash -c "cd ~ && bash /mnt/$name"
           EOL
 
           chmod +x arch-run
           sudo ln -s $(pwd)/arch-run /bin/arch-run
       - name: Install devtools in ArchLinux
-        shell: arch-run {0}
+        shell: arch-run root {0}
         run: |
-          pwd
           pacman-key --init
           pacman-key --populate
-          pacman -Syyu --noconfirm devtools
+          pacman -Syyu --noconfirm base-devel devtools sudo
+          useradd -m builder
+          echo 'builder ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
       - name: Build
-        shell: arch-run {0}
+        shell: arch-run builder {0}
         run: |
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop.git
+          cd telegram-desktop
+          makepkg -s
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
       - name: Setup tmate session

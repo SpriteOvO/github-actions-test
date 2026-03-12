@@ -13,9 +13,17 @@ jobs:
           curl -OL https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.zst
           mkdir arch
           sudo tar xf archlinux-bootstrap-x86_64.tar.zst -C arch --numeric-owner
-          echo 'arch_run="sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/"' >> $GITHUB_ENV
+
+          cat >> arch-run << EOF
+          #!/bin/bash
+          name=$(basename $1)
+          sudo cp $1 arch/root.x86_64/mnt/$name
+          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ bash /mnt/$name
+          EOF
+
+          chmod +x arch-run
       - name: Bootstrap ArchLinux
-        shell: '"sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/" bash {0}'
+        shell: arch-run ${0}
         run: |
           pacman-key --init
           pacman-key --populate

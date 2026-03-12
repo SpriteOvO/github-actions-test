@@ -37,7 +37,7 @@ jobs:
           #!/bin/bash
           name=$(basename $2)
           sudo cp $2 arch/root.x86_64/mnt/$name
-          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ su - $1 -c "mv /mnt/$name /tmp/ && bash /tmp/$name"
+          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ su - $1 -c "sudo mv /mnt/$name /tmp/ && bash /tmp/$name"
           EOL
           chmod +x arch-run
           sudo mv arch-run /bin/arch-run
@@ -46,7 +46,7 @@ jobs:
         run: ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Build
         shell: arch-run builder {0}
-        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/build-arch.sh
+        run: echo 1 # ${{ secrets.GIT_CLONE_REPO }}/scripts/build-arch.sh
       - name: Upload
         if: always()
         shell: arch-run builder {0}

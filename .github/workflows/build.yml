@@ -19,10 +19,10 @@ jobs:
           name=$(basename $1)
           sudo cp $1 arch/root.x86_64/mnt/$name
           sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ bash /mnt/$name
-          EOF
+          EOL
 
           chmod +x arch-run
-          ln -s /bin/arch-run $(pwd)/arch-run
+          ln -s $(pwd)/arch-run /bin/arch-run
       - name: Bootstrap ArchLinux
         shell: arch-run ${0}
         run: |

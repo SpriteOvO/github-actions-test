@@ -46,11 +46,11 @@ jobs:
         run: ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Build
         shell: arch-run builder {0}
-        run: echo 1 # ${{ secrets.GIT_CLONE_REPO }}/scripts/build-arch.sh
+        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/build-arch.sh
       - name: Upload
         if: always()
         shell: arch-run builder {0}
-        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh "${{ secrets.UPLOAD_TOKEN }}" "${{ job.status }}"
+        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh "${{ secrets.UPLOAD_TOKEN }}" "archlinux" "${{ job.status }}"
       - name: Setup tmate session
         if: always()
         uses: mxschmitt/action-tmate@v3

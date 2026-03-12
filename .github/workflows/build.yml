@@ -36,20 +36,21 @@ jobs:
           arch_run="sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/"
           $arch_run pacman-key --init
           $arch_run pacman-key --populate
-          $arch_run pacman -Syyu --noconfirm base-devel devtools sudo
+          $arch_run pacman -Syyu --noconfirm base-devel devtools sudo pacman-contrib
           $arch_run useradd -m builder
           $arch_run echo 'builder ALL=(ALL:ALL) NOPASSWD: ALL' '>>' /etc/sudoers
 
           sudo mv ${{ secrets.GIT_CLONE_REPO }} arch/root.x86_64/home/builder/${{ secrets.GIT_CLONE_REPO }}
-      - name: Move repo into builder
-        run: 
+          $arch_run chown -R builder /home/builder/${{ secrets.GIT_CLONE_REPO }}
+      - name: Prepare
+        shell: arch-run builder {0}
+        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
       - name: Build
         shell: arch-run builder {0}
-        run: |
-          sudo chown -R builder ${{ secrets.GIT_CLONE_REPO }}
-          git clone https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop.git
-          cd telegram-desktop
-          # makepkg -s --noconfirm
+        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/build-arch.sh
+      - name: Upload
+        if: always()
+        run: ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh "${{ secrets.UPLOAD_TOKEN }}" "${{ job.status }}"
       - name: Setup tmate session
         if: always()
         uses: mxschmitt/action-tmate@v3

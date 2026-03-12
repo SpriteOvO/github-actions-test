@@ -21,7 +21,7 @@ jobs:
           #!/bin/bash
           name=$(basename $2)
           sudo cp $2 arch/root.x86_64/mnt/$name
-          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ su - $1 -c /mnt/$name
+          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ su - $1 -c "bash /mnt/$name"
           EOL
 
           chmod +x arch-run
@@ -39,7 +39,7 @@ jobs:
         run: |
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop.git
           cd telegram-desktop
-          makepkg -s
+          makepkg -s --noconfirm
       - name: Setup tmate session
         if: always()
         uses: mxschmitt/action-tmate@v3

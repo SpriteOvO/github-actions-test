@@ -32,10 +32,11 @@ jobs:
         run: |
           pacman-key --init
           pacman-key --populate
-          pacman -Syyu devtools
+          pacman -Syyu --noconfirm devtools
       - name: Build
         shell: arch-run {0}
         run: |
+          pwd
           git clone https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop.git
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3

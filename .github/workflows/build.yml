@@ -14,7 +14,7 @@ jobs:
           mkdir arch
           sudo tar xf archlinux-bootstrap-x86_64.tar.zst -C arch --numeric-owner
 
-          cat >> arch-run << EOF
+          cat > arch-run << 'EOL'
           #!/bin/bash
           name=$(basename $1)
           sudo cp $1 arch/root.x86_64/mnt/$name

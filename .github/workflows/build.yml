@@ -8,6 +8,17 @@ jobs:
   archlinux:
     runs-on: ubuntu-latest
     steps:
+      - name: Download ArchLinux bootstrap
+        run: |
+          curl -OL https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.zst
+          mkdir arch
+          sudo tar xf archlinux-bootstrap-x86_64.tar.zst -C arch --numeric-owner
+          echo 'arch_run="sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/"' >> $GITHUB_ENV
+      - name: Bootstrap ArchLinux
+        shell: $arch_run bash {0}
+        run: |
+          pacman-key --init
+          pacman-key --populate
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
       - name: Setup tmate session

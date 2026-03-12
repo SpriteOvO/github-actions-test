@@ -28,7 +28,7 @@ jobs:
           #!/bin/bash
           name=$(basename $2)
           sudo cp $2 arch/root.x86_64/mnt/$name
-          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ su - $1 -c "bash /mnt/$name"
+          sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/ su - $1 -c "mv /mnt/$name /tmp/ && bash /tmp/$name"
           EOL
           chmod +x arch-run
           sudo ln -s $(pwd)/arch-run /bin/arch-run

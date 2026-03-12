@@ -16,7 +16,7 @@ jobs:
           ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
           ref: ci-test
           fetch-depth: 0
-      - name: Download ArchLinux bootstrap
+      - name: Bootstrap ArchLinux
         run: |
           curl -OL https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.zst
           mkdir arch
@@ -32,16 +32,17 @@ jobs:
           EOL
           chmod +x arch-run
           sudo ln -s $(pwd)/arch-run /bin/arch-run
-      - name: Prepare builder
-        shell: arch-run root {0}
-        run: |
-          pacman-key --init
-          pacman-key --populate
-          pacman -Syyu --noconfirm base-devel devtools sudo
-          useradd -m builder
-          echo 'builder ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+          arch_run="sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/"
+          $arch_run pacman-key --init
+          $arch_run pacman-key --populate
+          $arch_run pacman -Syyu --noconfirm base-devel devtools sudo
+          $arch_run useradd -m builder
+          $arch_run 'echo "builder ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers'
+
+          sudo mv ${{ secrets.GIT_CLONE_REPO }} arch/root.x86_64/home/builder/${{ secrets.GIT_CLONE_REPO }}
       - name: Move repo into builder
-        run: sudo mv ${{ secrets.GIT_CLONE_REPO }} arch/root.x86_64/home/builder/${{ secrets.GIT_CLONE_REPO }}
+        run: 
       - name: Build
         shell: arch-run builder {0}
         run: |

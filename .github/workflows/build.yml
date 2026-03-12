@@ -36,7 +36,7 @@ jobs:
           arch_run="sudo arch/root.x86_64/bin/arch-chroot arch/root.x86_64/"
           $arch_run pacman-key --init
           $arch_run pacman-key --populate
-          $arch_run pacman -Syyu --noconfirm base-devel devtools sudo pacman-contrib
+          $arch_run pacman -Syyu --noconfirm base-devel devtools sudo pacman-contrib 7zip
           $arch_run useradd -m builder
           $arch_run bash -c 'echo "builder ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers'
 

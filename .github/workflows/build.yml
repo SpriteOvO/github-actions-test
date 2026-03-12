@@ -1,53 +1,20 @@
-name: Windows
+name: ArchLinux
 
 on:
   workflow_dispatch:
   push:
 
 jobs:
-  windows:
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: powershell
+  archlinux:
+    runs-on: ubuntu-latest
     steps:
-      - name: Clone
-        uses: actions/checkout@v6
-        with:
-          repository: ${{ secrets.GIT_CLONE_OWNER }}/${{ secrets.GIT_CLONE_REPO }}
-          path: ${{ secrets.GIT_CLONE_REPO }}
-          ssh-key: ${{ secrets.GIT_CLONE_SSH_KEY }}
-          ref: ci-test
-          fetch-depth: 0
-      - name: Prepare
-        run: |
-          bash ${{ secrets.GIT_CLONE_REPO }}/scripts/prepare.sh
-          perl -ne 's/.*AppVersionOriginal\s*// && print' Telegram/build/version
-      - name: Cache
-        uses: actions/cache@v5
-        with:
-          path: ${{ secrets.CACHE_PATH }}
-          key: ${{ runner.OS }}-x64-${{ env.CACHE_KEY }}
-      - name: Setup VS Env
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x64
-          sdk: ${{ env.WIN_SDK }}
-      - name: Build
-        shell: cmd
-        run: ${{ secrets.GIT_CLONE_REPO }}\scripts\build-win.bat
-      - name: Upload
-        if: always()
-        run: bash ${{ secrets.GIT_CLONE_REPO }}/scripts/upload.sh "${{ secrets.UPLOAD_TOKEN }}" "${{ job.status }}"
-      - name: Install RustDesk for Debug
-        shell: powershell
-        run: |
-          choco install rustdesk.install
-          cd "C:\Program Files\RustDesk\"
-          ./rustdesk.exe --install-service
-          ./rustdesk.exe --get-id | Out-String
-          ./rustdesk.exe --password AWeakpASSword
-      - name: Block for remote control
-        shell: bash
-        run: sleep 10000000
-
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
